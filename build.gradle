@@ -78,6 +78,19 @@ checkstyle {
     toolVersion '10.0'
 }
 
+checkstyleMain {
+    source ='src/main/java'
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir 'src/main/java'
+            srcDir 'build/generated/sources/annotationProcessor/java/main'
+        }
+    }
+}
+
 tasks.withType(JavaCompile) {
     options.encoding = "UTF-8"
 }
