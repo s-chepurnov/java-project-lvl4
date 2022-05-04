@@ -14,8 +14,6 @@ repositories {
     mavenCentral()
 }
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(17)
-
 compileJava {
     options.release = 17
 }
@@ -42,9 +40,9 @@ dependencies {
     implementation 'io.ebean:ebean-migration:12.15.1'
     implementation 'io.ebean:ebean-annotation:7.7'
     implementation 'org.junit.jupiter:junit-jupiter:5.8.1'
-    annotationProcessor 'io.ebean:querybean-generator:12.15.1'
     implementation 'com.konghq:unirest-java:3.13.6'
     implementation 'org.jsoup:jsoup:1.14.3'
+    annotationProcessor 'io.ebean:querybean-generator:12.15.1'
 
     // NOTE: ebean-ddl-generator требует старые зависимости, которых нет в java 9 и выше
     implementation 'org.glassfish.jaxb:jaxb-runtime:2.3.5'
@@ -76,19 +74,6 @@ jacocoTestReport {
 
 checkstyle {
     toolVersion '10.0'
-}
-
-checkstyleMain {
-    source ='src/main/java'
-}
-
-sourceSets {
-    main {
-        java {
-            srcDir 'src/main/java'
-            srcDir 'build/generated/sources/annotationProcessor/java/main'
-        }
-    }
 }
 
 tasks.withType(JavaCompile) {
