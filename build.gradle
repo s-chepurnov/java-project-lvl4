@@ -78,6 +78,10 @@ checkstyle {
     toolVersion '10.0'
 }
 
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
+
 task generateMigrations(type: JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     mainClass = 'hexlet.code.MigrationGenerator'
