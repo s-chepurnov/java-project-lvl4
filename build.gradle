@@ -7,7 +7,7 @@ plugins {
     id 'jacoco'
 }
 
-group = 'io.hexlet'
+group = 'hexlet.code'
 version = '1.0-SNAPSHOT'
 
 repositories {
@@ -53,6 +53,7 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
     testImplementation 'org.junit.jupiter:junit-jupiter-params:5.8.2'
     testImplementation 'org.assertj:assertj-core:3.22.0'
+    testImplementation 'hexlet.code:app'
     testImplementation 'io.ebean:ebean-test:12.15.1'
     testImplementation 'com.konghq:unirest-java:3.13.6'
     testImplementation 'com.squareup.okhttp3:mockwebserver:4.9.3'
@@ -68,18 +69,14 @@ testlogger {
     showStandardStreams true
 }
 
-jacocoTestReport {
-    reports {
-        xml.required = true
-    }
-}
-
 checkstyle {
     toolVersion '10.0'
 }
 
-tasks.withType(JavaCompile) {
-    options.encoding = "UTF-8"
+jacocoTestReport {
+    reports {
+        xml.required = true
+    }
 }
 
 task generateMigrations(type: JavaExec) {

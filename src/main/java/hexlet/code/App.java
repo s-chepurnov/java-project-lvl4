@@ -15,7 +15,7 @@ import static io.javalin.apibuilder.ApiBuilder.path;
 import static io.javalin.apibuilder.ApiBuilder.get;
 import static io.javalin.apibuilder.ApiBuilder.post;
 
-class App {
+public final class App {
 
     public static void main(String[] args) {
         Javalin app = getApp();
