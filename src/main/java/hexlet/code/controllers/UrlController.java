@@ -133,7 +133,7 @@ public final class UrlController {
         ctx.sessionAttribute("flash", "Страница успешно проверена");
         ctx.sessionAttribute("flash-type", "success");
         ctx.attribute("url", dbUrl);
-        ctx.render("url/show.html");
+        ctx.redirect("/urls/" + id);
     };
 
     public static Handler listUrl() {
