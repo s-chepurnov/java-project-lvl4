@@ -8,6 +8,7 @@ import io.javalin.http.Handler;
 import io.javalin.http.NotFoundResponse;
 import kong.unirest.HttpResponse;
 import kong.unirest.Unirest;
+import kong.unirest.UnirestException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -90,7 +91,7 @@ public final class UrlController {
             ctx.sessionAttribute("flash", "Страница уже существует");
             ctx.sessionAttribute("flash-type", "danger");
             ctx.attribute("url", url);
-            ctx.render("/index.html");
+            ctx.redirect("/urls/" + dbUrl.getId());
             return;
         }
 
@@ -115,24 +116,30 @@ public final class UrlController {
 
         String urlStr = dbUrl.getName();
 
-        HttpResponse<String> response = Unirest.get(urlStr).asString();
-        String html = response.getBody();
-        Document doc = Jsoup.parse(html);
+        try {
+            HttpResponse<String> response = Unirest.get(urlStr).asString();
+            String html = response.getBody();
+            Document doc = Jsoup.parse(html);
 
-        String title = doc.title();
-        Elements h1 = doc.getElementsByTag("h1");
-        Element meta = doc.selectFirst("meta[name=description]");
+            String title = doc.title();
+            Elements h1 = doc.getElementsByTag("h1");
+            Element meta = doc.selectFirst("meta[name=description]");
 
-        urlCheck.setUrl(dbUrl);
-        urlCheck.setStatusCode(response.getStatus());
-        urlCheck.setTitle(title);
-        urlCheck.setH1(h1.hasText() ? h1.text() : "");
-        urlCheck.setDescription(meta != null && meta.hasAttr("content") ? meta.attr("content") : "");
-        urlCheck.save();
+            urlCheck.setUrl(dbUrl);
+            urlCheck.setStatusCode(response.getStatus());
+            urlCheck.setTitle(title);
+            urlCheck.setH1(h1.hasText() ? h1.text() : "");
+            urlCheck.setDescription(meta != null && meta.hasAttr("content") ? meta.attr("content") : "");
+            urlCheck.save();
 
-        ctx.sessionAttribute("flash", "Страница успешно проверена");
-        ctx.sessionAttribute("flash-type", "success");
-        ctx.attribute("url", dbUrl);
+            ctx.sessionAttribute("flash", "Страница успешно проверена");
+            ctx.sessionAttribute("flash-type", "success");
+            ctx.attribute("url", dbUrl);
+        } catch (UnirestException e) {
+            ctx.sessionAttribute("flash", "Страница недоступна");
+            ctx.sessionAttribute("flash-type", "danger");
+        }
+
         ctx.redirect("/urls/" + id);
     };
 

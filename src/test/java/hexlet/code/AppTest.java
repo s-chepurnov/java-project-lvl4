@@ -104,7 +104,7 @@ class AppTest {
         void testCreateSuccess() {
             HttpResponse<String> responsePost = Unirest
                     .post(baseUrl + "/urls")
-                    .field("url", EXAMPLE_URL)
+                    .field("url", "https://ru.hexlet.io")
                     .asString();
             assertThat(responsePost.getStatus()).isEqualTo(successStatus);
 
