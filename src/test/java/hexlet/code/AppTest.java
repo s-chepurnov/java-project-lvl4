@@ -31,6 +31,7 @@ class AppTest {
     private static Url existingUrl;
     private static Transaction transaction;
     private final int successStatus = 200;
+    private final int foundStatus = 302;
     private static final String EXAMPLE_URL = "https://www.example.com";
 
     @BeforeAll
@@ -100,13 +101,11 @@ class AppTest {
         }
 
         @Test
-        void testCreate() {
-
+        void testCreateSuccess() {
             HttpResponse<String> responsePost = Unirest
                     .post(baseUrl + "/urls")
-                    .field("name", EXAMPLE_URL)
-                    .asEmpty();
-
+                    .field("url", EXAMPLE_URL)
+                    .asString();
             assertThat(responsePost.getStatus()).isEqualTo(successStatus);
 
             HttpResponse<String> response = Unirest
@@ -123,6 +122,15 @@ class AppTest {
 
             assertThat(dbUrl).isNotNull();
             assertThat(dbUrl.getName()).isEqualTo(EXAMPLE_URL);
+        }
+
+        @Test
+        void testCreateFound() {
+            HttpResponse<String> responsePost = Unirest
+                    .post(baseUrl + "/urls")
+                    .asEmpty();
+
+            assertThat(responsePost.getStatus()).isEqualTo(foundStatus);
         }
 
         @Test

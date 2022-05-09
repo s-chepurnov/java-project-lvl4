@@ -73,7 +73,8 @@ public final class UrlController {
                 parsedUrl = parsedUrl + ":" +  aURL.getPort();
             }
         } catch (Exception e) {
-            ctx.status(302);
+            final int found = 302;
+            ctx.status(found);
             ctx.sessionAttribute("flash", "Некорректный URL");
             ctx.sessionAttribute("flash-type", "danger");
             ctx.render("/index.html");
