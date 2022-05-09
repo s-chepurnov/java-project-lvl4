@@ -73,6 +73,7 @@ public final class UrlController {
                 parsedUrl = parsedUrl + ":" +  aURL.getPort();
             }
         } catch (Exception e) {
+            ctx.status(302);
             ctx.sessionAttribute("flash", "Некорректный URL");
             ctx.sessionAttribute("flash-type", "danger");
             ctx.render("/index.html");
@@ -128,6 +129,8 @@ public final class UrlController {
         urlCheck.setDescription(meta != null && meta.hasAttr("content") ? meta.attr("content") : "");
         urlCheck.save();
 
+        ctx.sessionAttribute("flash", "Страница успешно проверена");
+        ctx.sessionAttribute("flash-type", "success");
         ctx.attribute("url", dbUrl);
         ctx.render("url/show.html");
     };
