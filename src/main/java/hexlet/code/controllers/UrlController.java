@@ -37,7 +37,6 @@ public final class UrlController {
     };
 
     private static Handler list = ctx -> {
-
         int page = ctx.queryParamAsClass("page", Integer.class).getOrDefault(1) - 1;
         final int rowsPerPage = 10;
 
@@ -57,7 +56,6 @@ public final class UrlController {
                 .boxed()
                 .collect(Collectors.toList());
 
-        ctx.attribute("pages", pages);
         ctx.attribute("pages", pages);
         ctx.attribute("currentPage", currentPage);
         ctx.attribute("urls", dbUrls);
