@@ -102,11 +102,13 @@ class AppTest {
 
         @Test
         void testCreateSuccess() {
+            String testUrl = "https://ru.hexlet.io";
             HttpResponse<String> responsePost = Unirest
                     .post(baseUrl + "/urls")
-                    .field("url", "https://ru.hexlet.io")
-                    .asString();
-            assertThat(responsePost.getStatus()).isEqualTo(successStatus);
+                    .field("url", testUrl)
+                    .asEmpty();
+
+            assertThat(responsePost.getStatus()).isEqualTo(foundStatus);
 
             HttpResponse<String> response = Unirest
                     .get(baseUrl + "/urls")
@@ -114,14 +116,14 @@ class AppTest {
             String body = response.getBody();
 
             assertThat(response.getStatus()).isEqualTo(successStatus);
-            assertThat(body).contains(EXAMPLE_URL);
+            assertThat(body).contains(testUrl);
 
             Url dbUrl = new QUrl()
-                    .name.equalTo(EXAMPLE_URL)
+                    .name.equalTo(testUrl)
                     .findOne();
 
             assertThat(dbUrl).isNotNull();
-            assertThat(dbUrl.getName()).isEqualTo(EXAMPLE_URL);
+            assertThat(dbUrl.getName()).isEqualTo(testUrl);
         }
 
         @Test

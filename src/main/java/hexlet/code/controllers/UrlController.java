@@ -64,23 +64,24 @@ public final class UrlController {
 
     private static Handler create = ctx -> {
         String name = ctx.formParam("url");
-        String parsedUrl = "";
+
+        URL url;
         try {
-            URL aURL = new URL(name);
-            parsedUrl = aURL.getProtocol() + "://" +  aURL.getHost();
-            if (aURL.getPort() > 0) {
-                parsedUrl = parsedUrl + ":" +  aURL.getPort();
-            }
+            url = new URL(name);
         } catch (Exception e) {
             final int found = 302;
             ctx.status(found);
             ctx.sessionAttribute("flash", "Некорректный URL");
             ctx.sessionAttribute("flash-type", "danger");
-            ctx.render("/index.html");
+            ctx.redirect("/");
             return;
         }
 
-        Url url = new Url(parsedUrl);
+        String parsedUrl = url.getProtocol() + "://" +  url.getHost();
+        if (url.getPort() > 0) {
+            parsedUrl = parsedUrl + ":" +  url.getPort();
+        }
+
         Url dbUrl = new QUrl()
                 .name.equalTo(parsedUrl)
                 .findOne();
@@ -93,11 +94,12 @@ public final class UrlController {
             return;
         }
 
-        url.save();
+        Url modelUrl = new Url(parsedUrl);
+        modelUrl.save();
 
         ctx.sessionAttribute("flash", "Страница успешно добавлена");
         ctx.sessionAttribute("flash-type", "success");
-        ctx.render("/index.html");
+        ctx.redirect("/urls");
     };
 
     private static Handler check = ctx -> {
