@@ -11,4 +11,4 @@ datasource:
 
 ebean:
   migration:
-    run: false
+    run: true
