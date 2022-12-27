@@ -7,5 +7,5 @@ build
 #ignore IDEA
 .idea/
 
-database.trace.db
-database.mv.db
+app/database.trace.db
+app/database.mv.db
