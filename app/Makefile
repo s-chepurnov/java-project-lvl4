@@ -1,5 +1,5 @@
 setup:
-	gradle wrapper --gradle-version 7.4
+	gradle wrapper --gradle-version 8.9
 
 clean:
 	./gradlew clean
@@ -8,16 +8,13 @@ build:
 	./gradlew clean build
 
 start:
-	APP_ENV=development ./gradlew run
+	./gradlew run
 
 install:
 	./gradlew install
 
 start-dist:
-	APP_ENV=production ./build/install/app/bin/app
-
-generate-migrations:
-	./gradlew generateMigrations
+	./build/install/app/bin/app
 
 lint:
 	./gradlew checkstyleMain checkstyleTest
@@ -30,11 +27,5 @@ report:
 
 check-updates:
 	./gradlew dependencyUpdates
-
-image-build:
-	docker build -t hexletcomponents/java-javalin-blog:latest .
-
-image-push:
-	docker push hexletcomponents/java-javalin-blog:latest
 
 .PHONY: build

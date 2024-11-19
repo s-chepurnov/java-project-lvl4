@@ -1,13 +1,10 @@
-datasource:
-  default: development
-  development:
-    username: sa
-    password: sa
-    url: "jdbc:h2:./database"
-
 ebean:
   test:
     useDocker: false
     platform: h2
     ddlMode: dropCreate
     dbName: test
+  ddl:
+    run: true
+    seedSql: seed.sql
+

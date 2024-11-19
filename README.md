@@ -11,19 +11,13 @@ Check websites for SEO suitability for free
 
 ## Requirements
 
-* JDK 17
-* Gradle 7
+* JDK 21
+* Gradle 8
 * GNU Make
 
 ## Run server
 
 ```bash
 make start
-# Open http://localhost:8080
+# Open http://localhost:3000
 ```
-
-### App link
-
-https://still-retreat-51264.herokuapp.com
-
-https://java-project-lvl4-production-fbed.up.railway.app
